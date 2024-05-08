@@ -20,11 +20,11 @@ public class LoyaltyService {
     }
 
     public List<LoyaltyPoints> getLoyaltyPoints(){
-        updateLoyaltyStatus();
+        updateLoyaltyPointsStatus();
         return loyaltyPointsRepository.findAll();
     }
 
-    public void updateLoyaltyStatus(){
+    public void updateLoyaltyPointsStatus(){
         LocalDateTime now = LocalDateTime.of(2022, 6, 19, 0, 0);
 
         LocalDateTime fiveWeeksAgo = now.minusWeeks(5);
@@ -62,5 +62,30 @@ public class LoyaltyService {
             }
 
         });
+    }
+
+    public Summary getSummary(Long customerId) {
+        List<LoyaltyPoints> loyaltyPointsList = loyaltyPointsRepository.findLoyaltyPointsByCustomerId(customerId);
+
+        int availablePoints = loyaltyPointsList.stream()
+                .filter(loyaltyPoints -> PointStatus.AVAILABLE.equals(loyaltyPoints.getStatus()))
+                .map(LoyaltyPoints::getPoints)
+                .reduce(Integer::sum)
+                .orElse(0);
+
+        int pendingPoints = loyaltyPointsList.stream()
+                .filter(loyaltyPoints -> PointStatus.PENDING.equals(loyaltyPoints.getStatus()))
+                .map(LoyaltyPoints::getPoints)
+                .reduce(Integer::sum)
+                .orElse(0);
+
+        int spentPoints = loyaltyPointsList.stream()
+                .filter(loyaltyPoints -> PointStatus.SPENT.equals(loyaltyPoints.getStatus()))
+                .map(LoyaltyPoints::getPoints)
+                .reduce(Integer::sum)
+                .orElse(0);
+
+        return new Summary(customerId, pendingPoints, availablePoints, spentPoints, loyaltyPointsList);
+
     }
 }

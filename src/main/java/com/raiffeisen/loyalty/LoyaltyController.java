@@ -1,6 +1,7 @@
 package com.raiffeisen.loyalty;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -16,7 +17,12 @@ public class LoyaltyController {
     }
 
     @GetMapping("/loyalty-points")
-    private List<LoyaltyPoints> getLoyaltyPonts(){
+    public List<LoyaltyPoints> getLoyaltyPonts(){
         return loyaltyService.getLoyaltyPoints();
+    }
+
+    @GetMapping("/customers/{customerId}/summary")
+    public Summary getSummary(@PathVariable Long customerId) {
+        return loyaltyService.getSummary(customerId);
     }
 }

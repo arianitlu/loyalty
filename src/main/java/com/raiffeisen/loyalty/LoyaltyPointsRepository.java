@@ -19,4 +19,6 @@ public interface LoyaltyPointsRepository extends JpaRepository<LoyaltyPoints, Lo
     @Transactional
     @Query("UPDATE LoyaltyPoints lp SET lp.status = :newStatus WHERE lp.transactionDate < :threshold")
     int expireOldLoyaltyPoints(PointStatus newStatus, LocalDateTime threshold);
+
+    List<LoyaltyPoints> findLoyaltyPointsByCustomerId(Long customerId);
 }
