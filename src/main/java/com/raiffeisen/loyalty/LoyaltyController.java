@@ -9,12 +9,14 @@ import java.util.List;
 @RestController
 public class LoyaltyController {
 
+    LoyaltyService loyaltyService;
+
+    public LoyaltyController(LoyaltyService loyaltyService) {
+        this.loyaltyService = loyaltyService;
+    }
+
     @GetMapping("/loyalty-points")
     private List<LoyaltyPoints> getLoyaltyPonts(){
-        List<LoyaltyPoints> loyaltyPointsList = new ArrayList<>();
-        loyaltyPointsList.add(new LoyaltyPoints(12L, 5800, PointStatus.PENDING));
-        loyaltyPointsList.add(new LoyaltyPoints(13L, 5800, PointStatus.AVAILABLE));
-
-        return loyaltyPointsList;
+        return loyaltyService.getLoyaltyPoints();
     }
 }
