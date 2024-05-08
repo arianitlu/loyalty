@@ -13,9 +13,7 @@ public class LoyaltyPoints {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long loylatyPointsId;
-
     private long customerId;
-
     private long transactionId;
     private int transactionAmount;
     private LocalDateTime transactionDate;

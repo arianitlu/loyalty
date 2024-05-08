@@ -29,12 +29,14 @@ public class LoyaltyService {
         return loyaltyRepository.findAll();
     }
 
+    // Better option to use Scheduler to run this method once an end of week
     @Scheduled(cron = "0 59 23 * * SUN")
     public void updateLoyaltyPointsStatus(){
+        // sample date
         LocalDateTime now = LocalDateTime.of(2022, 6, 19, 0, 0);
 
         LocalDateTime fiveWeeksAgo = now.minusWeeks(5);
-        int updatedCount = loyaltyRepository.expireOldLoyaltyPoints(PointStatus.EXPIRED, fiveWeeksAgo);
+        loyaltyRepository.expireOldLoyaltyPoints(PointStatus.EXPIRED, fiveWeeksAgo);
 
         LocalDateTime startOfWeek = now.with(DayOfWeek.MONDAY).with(LocalTime.MIN);
         LocalDateTime endOfWeek = now.with(DayOfWeek.SUNDAY).with(LocalTime.MAX);
