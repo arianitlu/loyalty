@@ -28,7 +28,7 @@ public class LoyaltyPoints {
         this.transactionId = transactionId;
         this.transactionAmount = transactionAmount;
         this.transactionDate = transactionDate;
-        this.points = points;
+        this.points = calculatePoints(transactionAmount);
         this.status = status;
     }
 
@@ -78,5 +78,19 @@ public class LoyaltyPoints {
 
     public void setTransactionDate(LocalDateTime transactionDate) {
         this.transactionDate = transactionDate;
+    }
+
+    private int calculatePoints(int transactionAmount){
+        int points = 0;
+
+        if (transactionAmount <= 5000) {
+            points =  transactionAmount;
+        } else if (transactionAmount <= 7500) {
+            points = (5000 + (transactionAmount - 5000) * 2);
+        } else {
+            points = (5000 + (2500 * 2) + (transactionAmount - 7500) * 3);
+        }
+
+        return points;
     }
 }
