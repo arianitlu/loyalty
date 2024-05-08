@@ -14,6 +14,8 @@ public class LoyaltyPoints {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long loylatyPointsId;
 
+    private long customerId;
+
     private long transactionId;
     private int transactionAmount;
     private LocalDateTime transactionDate;
@@ -23,8 +25,9 @@ public class LoyaltyPoints {
     public LoyaltyPoints() {
     }
 
-    public LoyaltyPoints(long loylatyPointsId, long transactionId, int transactionAmount, LocalDateTime transactionDate,  PointStatus status) {
+    public LoyaltyPoints(long loylatyPointsId, long customerId, long transactionId, int transactionAmount, LocalDateTime transactionDate,  PointStatus status) {
         this.loylatyPointsId = loylatyPointsId;
+        this.customerId = customerId;
         this.transactionId = transactionId;
         this.transactionAmount = transactionAmount;
         this.transactionDate = transactionDate;
@@ -78,6 +81,14 @@ public class LoyaltyPoints {
 
     public void setTransactionDate(LocalDateTime transactionDate) {
         this.transactionDate = transactionDate;
+    }
+
+    public long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(long customerId) {
+        this.customerId = customerId;
     }
 
     private int calculatePoints(int transactionAmount){
