@@ -1,5 +1,6 @@
 package com.raiffeisen.loyalty;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
@@ -20,10 +21,12 @@ public class LoyaltyService {
     }
 
     public List<LoyaltyPoints> getLoyaltyPoints(){
+        // added this method just for testing via api
         updateLoyaltyPointsStatus();
         return loyaltyPointsRepository.findAll();
     }
 
+    @Scheduled(cron = "0 59 23 * * SUN")
     public void updateLoyaltyPointsStatus(){
         LocalDateTime now = LocalDateTime.of(2022, 6, 19, 0, 0);
 
