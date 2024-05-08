@@ -1,5 +1,8 @@
 package com.raiffeisen.loyalty;
 
+import com.raiffeisen.loyalty.models.LoyaltyPoints;
+import com.raiffeisen.loyalty.models.PointStatus;
+import com.raiffeisen.loyalty.models.Summary;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -14,16 +17,16 @@ import java.util.stream.Collectors;
 @Service
 public class LoyaltyService {
 
-    LoyaltyPointsRepository loyaltyPointsRepository;
+    LoyaltyRepository loyaltyRepository;
 
-    public LoyaltyService(LoyaltyPointsRepository loyaltyPointsRepository) {
-        this.loyaltyPointsRepository = loyaltyPointsRepository;
+    public LoyaltyService(LoyaltyRepository loyaltyRepository) {
+        this.loyaltyRepository = loyaltyRepository;
     }
 
     public List<LoyaltyPoints> getLoyaltyPoints(){
         // added this method just for testing via api
         updateLoyaltyPointsStatus();
-        return loyaltyPointsRepository.findAll();
+        return loyaltyRepository.findAll();
     }
 
     @Scheduled(cron = "0 59 23 * * SUN")
@@ -31,12 +34,12 @@ public class LoyaltyService {
         LocalDateTime now = LocalDateTime.of(2022, 6, 19, 0, 0);
 
         LocalDateTime fiveWeeksAgo = now.minusWeeks(5);
-        int updatedCount = loyaltyPointsRepository.expireOldLoyaltyPoints(PointStatus.EXPIRED, fiveWeeksAgo);
+        int updatedCount = loyaltyRepository.expireOldLoyaltyPoints(PointStatus.EXPIRED, fiveWeeksAgo);
 
         LocalDateTime startOfWeek = now.with(DayOfWeek.MONDAY).with(LocalTime.MIN);
         LocalDateTime endOfWeek = now.with(DayOfWeek.SUNDAY).with(LocalTime.MAX);
 
-        List<LoyaltyPoints> potentialPoints = loyaltyPointsRepository.findAllPointsInWeek(startOfWeek, endOfWeek);
+        List<LoyaltyPoints> potentialPoints = loyaltyRepository.findAllPointsInWeek(startOfWeek, endOfWeek);
 
         Map<Long, List<LoyaltyPoints>> customerIdToLoyaltyPoints = potentialPoints.stream()
                 .collect(Collectors.groupingBy(LoyaltyPoints::getCustomerId));
@@ -59,7 +62,7 @@ public class LoyaltyService {
                 if (hasTransactionsEveryDay) {
                     loyaltyPointsList.forEach(lp -> {
                         lp.setStatus(PointStatus.AVAILABLE);
-                        loyaltyPointsRepository.save(lp);
+                        loyaltyRepository.save(lp);
                     });
                 }
             }
@@ -68,7 +71,7 @@ public class LoyaltyService {
     }
 
     public Summary getSummary(Long customerId) {
-        List<LoyaltyPoints> loyaltyPointsList = loyaltyPointsRepository.findLoyaltyPointsByCustomerId(customerId);
+        List<LoyaltyPoints> loyaltyPointsList = loyaltyRepository.findLoyaltyPointsByCustomerId(customerId);
 
         int availablePoints = loyaltyPointsList.stream()
                 .filter(loyaltyPoints -> PointStatus.AVAILABLE.equals(loyaltyPoints.getStatus()))

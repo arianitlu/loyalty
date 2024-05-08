@@ -1,4 +1,6 @@
-package com.raiffeisen.loyalty;
+package com.raiffeisen.loyalty.models;
+
+import com.raiffeisen.loyalty.models.LoyaltyPoints;
 
 import java.util.List;
 

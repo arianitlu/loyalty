@@ -1,4 +1,4 @@
-package com.raiffeisen.loyalty;
+package com.raiffeisen.loyalty.models;
 
 public enum PointStatus {
     PENDING,

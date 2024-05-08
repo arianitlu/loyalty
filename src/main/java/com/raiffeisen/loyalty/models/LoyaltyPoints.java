@@ -1,4 +1,4 @@
-package com.raiffeisen.loyalty;
+package com.raiffeisen.loyalty.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

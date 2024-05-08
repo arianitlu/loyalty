@@ -1,5 +1,7 @@
 package com.raiffeisen.loyalty;
 
+import com.raiffeisen.loyalty.models.LoyaltyPoints;
+import com.raiffeisen.loyalty.models.PointStatus;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -10,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-public interface LoyaltyPointsRepository extends JpaRepository<LoyaltyPoints, Long> {
+public interface LoyaltyRepository extends JpaRepository<LoyaltyPoints, Long> {
 
     @Query("SELECT lp FROM LoyaltyPoints lp WHERE lp.transactionDate BETWEEN :startOfWeek AND :endOfWeek")
     List<LoyaltyPoints> findAllPointsInWeek(LocalDateTime startOfWeek, LocalDateTime endOfWeek);

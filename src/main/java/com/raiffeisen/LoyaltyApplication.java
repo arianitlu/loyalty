@@ -1,4 +1,4 @@
-package com.raiffeisen.loyalty;
+package com.raiffeisen;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
