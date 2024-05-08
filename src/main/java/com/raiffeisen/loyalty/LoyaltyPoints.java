@@ -23,7 +23,7 @@ public class LoyaltyPoints {
     public LoyaltyPoints() {
     }
 
-    public LoyaltyPoints(long loylatyPointsId, long transactionId, int transactionAmount, LocalDateTime transactionDate, int points,  PointStatus status) {
+    public LoyaltyPoints(long loylatyPointsId, long transactionId, int transactionAmount, LocalDateTime transactionDate,  PointStatus status) {
         this.loylatyPointsId = loylatyPointsId;
         this.transactionId = transactionId;
         this.transactionAmount = transactionAmount;

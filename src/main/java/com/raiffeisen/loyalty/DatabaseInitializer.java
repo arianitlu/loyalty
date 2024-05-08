@@ -16,9 +16,12 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        LoyaltyPoints loyaltyPoints1 = new LoyaltyPoints(1L, 100, 4500, LocalDateTime.of(2022, 6, 15, 10, 30), 4500, PointStatus.PENDING);
-        LoyaltyPoints loyaltyPoints2 = new LoyaltyPoints(2L, 101,7800, LocalDateTime.of(2022, 6, 15, 10, 30),10900, PointStatus.PENDING);
-        loyaltyPointsRepository.save(loyaltyPoints1);
-        loyaltyPointsRepository.save(loyaltyPoints2);
+        loyaltyPointsRepository.save(new LoyaltyPoints(1L, 100, 550, LocalDateTime.of(2022, 6, 13, 10, 30), PointStatus.PENDING));
+        loyaltyPointsRepository.save(new LoyaltyPoints(2L, 101, 300, LocalDateTime.of(2022, 6, 14, 12, 30), PointStatus.PENDING));
+        loyaltyPointsRepository.save(new LoyaltyPoints(3L, 102, 450, LocalDateTime.of(2022, 6, 15, 15, 45), PointStatus.PENDING));
+        loyaltyPointsRepository.save(new LoyaltyPoints(4L, 103, 700, LocalDateTime.of(2022, 6, 16, 16, 00), PointStatus.PENDING));
+        loyaltyPointsRepository.save(new LoyaltyPoints(5L, 104, 200, LocalDateTime.of(2022, 6, 17, 11, 15), PointStatus.PENDING));
+        loyaltyPointsRepository.save(new LoyaltyPoints(6L, 105, 800, LocalDateTime.of(2022, 6, 18, 14, 30), PointStatus.PENDING));
+        loyaltyPointsRepository.save(new LoyaltyPoints(7L, 106, 600, LocalDateTime.of(2022, 6, 19, 9, 45), PointStatus.PENDING));
     }
 }
